@@ -43,7 +43,7 @@ function addAttributes(groups, axes) {
     $('#size_filter').attr('min', n_bound[0]);
     $('#size_filter').attr('max', n_bound[1]);
     $('#size_filter').attr('value', n_bound[0]);
-    var duration = 0;
+    var duration = 2000;
     var interpolator = d3.interpolateRgb.gamma(1)("orange", "purple");            
     mid_x = (axes.x.range()[1] - axes.x.range()[0]) / 2;
     mid_y = (axes.y.range()[0] - axes.y.range()[1]) / 2;
