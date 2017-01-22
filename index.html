@@ -6,19 +6,29 @@
         <link rel="stylesheet" href="style.css">        
     </head>
     <body>
-        <svg></svg>
+        <svg width="960" height="500"></svg>
+        <div class="info">
+            <span id="gr_name"></span><br />
+            Доля девочек: <span id="gr_gender"></span><br />
+            Средний балл: <span id="gr_gpa"></span><br />
+            Средний класс: <span id="gr_age"></span><br />
+            <a id="gr_link" target="_blank" href="">Ссылка</a>
+        </div>
         <div class="filters">
             <div>
-                Больше девочек<br />
-                <input id="girl_filter" type="range" min="0.5" max="1" step = "0.01" value="0">
-                </div>
-                <div>
-                Больше мальчиков<br />
-                <input id="boy_filter" type="range" min="0.5" max="1" step = "0.01" value="0"><br />
-                </div>
-                <div>
-                Больше размер<br />
+                Девочки<br />
+                <input id="girl_filter" type="range" min="0.5" max="1.01" step = "0.01" value="0">
+            </div>
+            <div>
+                Мальчики<br />
+                <input id="boy_filter" type="range" min="0.5" max="1.01" step = "0.01" value="0"><br />
+            </div>
+            <div>
+                Количество участников<br />
                 <input id="size_filter" type="range" min="10" max="100" step = "1" value="10"><br />
+            </div>
+            <div>
+                Названия <input type="checkbox" id="show_names" />
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

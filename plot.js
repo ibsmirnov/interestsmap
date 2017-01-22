@@ -6,22 +6,21 @@ $(function() {
     data.sort(function(a, b){return b['n']-a['n'];});    
     var groups = canvas.selectAll('circle').data(data).enter().append('circle');
     addAttributes(groups, axes);
-    addTooltip(groups, tooltip);
-    
-    addLegend(canvas);
-
-    addFilters(groups);
+    addTooltip(groups, tooltip);    
+    addLegend(canvas);    
+    var labels = canvas.selectAll('text.lbl').data(data).enter().append('text').attr('class', 'lbl');
+    $('.lbl').hide();$('.info').hide();
+    addLabels(labels, axes);
+    addFilters(groups, labels);
 });
 
 
 function getCanvas() {
-    var margin = {top: 10, right: 100, bottom: 10, left: 20};
+    var margin = {top: 10, right: 100, bottom: 30, left: 40};
     var width = 960 - margin.left - margin.right;
     var height = 500 - margin.top - margin.bottom;
 
     var svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
     .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     svg.width = width;
     svg.height = height;
@@ -64,17 +63,48 @@ function addAttributes(groups, axes) {
             return r;
         }).transition().duration(duration).ease(d3.easeLinear)        
         .style('fill', function(d) {            
-            return interpolator(d.gender - 1)
-        });
-        
+            return interpolator(d.gender - 1);
+        });        
 }
+
+function addLabels(labels, axes) {
+    var axes = axes;
+    var size = [8, 20];
+    var n_bound = [10, 78];   
+  
+    var interpolator = d3.interpolateRgb.gamma(1)("orange", "purple");                
+    labels     
+        .attr('y', function(d) {
+            return axes.y(d.gpa);            
+        })
+        .attr('x', function(d) {
+            return axes.x(d.grade);            
+        })
+        .style('font-size', function(d) {            
+            return (d.n - n_bound[0]) / (n_bound[1] - n_bound[0]) * (size[1] - size[0]) + size[0];            
+        })  
+        .style('fill', function(d) {            
+            return interpolator(d.gender - 1);
+        })
+        .text(function(d) {
+            return d.name;
+        });        
+}
+
 
 function addTooltip(groups, tooltip) {
     var tooltip = tooltip;
     groups.on("mouseover", function(d){tooltip.text(d.name).style("visibility", "visible");})
         .on("mousemove", function(){tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
         .on("mouseout", function(){tooltip.style("visibility", "hidden");})
-        .on("click", function(d){window.open(d.url)});
+        .on("click", function(d){            
+            $('.info').show();
+            $('#gr_name').html(d.name);
+            $('#gr_gender').html(Math.round((2 - d.gender) * 100) + '%');
+            $('#gr_gpa').html(Math.round(d.gpa * 100) / 100);
+            $('#gr_age').html(Math.round(d.grade * 10) / 10);
+            $('#gr_link').attr('href', d.url)
+        });
 }
 
 function addGrid(canvas, axes) {
@@ -86,6 +116,23 @@ function addGrid(canvas, axes) {
     canvas.append("g")           
       .attr("class", "grid")
       .call(d3.axisLeft(axes.y).ticks(5).tickSize(-canvas.width).tickSizeOuter([0, 0]));
+
+    canvas.append("text")             
+      .attr("transform",
+            "translate(" + (canvas.width / 2) + " ," + 
+                           (canvas.height + 26) + ")")
+      .style("text-anchor", "middle")
+      .style("font-size", 12)
+      .text("Класс");
+
+       canvas.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - 40)
+      .attr("x",0 - (canvas.height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .style("font-size", 12)
+      .text("Успеваемость");    
 }
 
 function addLegend(canvas) {
@@ -112,22 +159,31 @@ function addLegend(canvas) {
       .text('Доля девочек');
 }
 
-function addFilters(groups) {
+function addFilters(groups, labels) {
+    
     var on_change = function() {
         var val_girl = $('#girl_filter').val() * 1;
         var val_boy = $('#boy_filter').val() * 1;
         var val_size =  $('#size_filter').val() * 1;
-        groups.style('opacity', function(d) {
+
+        var filter_function = function(d) {
             if (((d.gender - 1 <= 1 - val_girl) || (d.gender - 1 >= val_boy)) && (d.n >= val_size)) {
                 return 1;
             }
             else {
                 return 0;
             }
-        });
+        }
+
+        groups.style('opacity', filter_function);
+        labels.style('opacity', filter_function)
     }
 
     $('#girl_filter').on('input change', on_change)
     $('#boy_filter').on('input change', on_change) 
     $('#size_filter').on('input change', on_change)
+    $('#show_names').on('click', function() {
+        $('.lbl').toggle();
+        $('circle').toggle();
+    })
 };
