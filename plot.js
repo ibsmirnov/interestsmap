@@ -103,6 +103,7 @@ function addTooltip(groups, tooltip) {
             $('#gr_gender').html(Math.round((2 - d.gender) * 100) + '%');
             $('#gr_gpa').html(Math.round(d.gpa * 100) / 100);
             $('#gr_age').html(Math.round(d.grade * 10) / 10);
+            $('#gr_n').html(Math.round(d.n * 10) / 10);
             $('#gr_link').attr('href', d.url)
         });
 }
