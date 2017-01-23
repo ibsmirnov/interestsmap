@@ -169,15 +169,15 @@ function addFilters(groups, labels) {
 
         var filter_function = function(d) {
             if (((d.gender - 1 <= 1 - val_girl) || (d.gender - 1 >= val_boy)) && (d.n >= val_size)) {
-                return 1;
+                return 'visible';
             }
             else {
-                return 0;
+                return 'hidden';
             }
         }
 
-        groups.style('opacity', filter_function);
-        labels.style('opacity', filter_function)
+        groups.style('visibility', filter_function);
+        labels.style('visibility', filter_function)
     }
 
     $('#girl_filter').on('input change', on_change)
