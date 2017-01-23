@@ -49,7 +49,7 @@ var simulation = d3.forceSimulation()
           .on("end", dragended));
 
   node.append("title")
-      .text(function(d) { return d.id; });
+      .text(function(d) { return d.group; });
 
   simulation
       .nodes(graph.nodes)
