@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 5px;
+    font-size: 12px;
+}
+
+
+svg {
+    font: 10px sans-serif;        
+}
+
+line {
+    fill: none;
+    stroke: #AAA;
+    shape-rendering: crispEdges;
+}
+
+.tooltip {
+    background-color: rgba(0,0,0,0.5);
+    padding: 2px 5px;
+    color: #FFF;
+    border-radius: 5px;
+}
+
+circle:hover {
+    cursor: pointer;
+}
+
+.filters div {
+    display: table-cell;
+    padding-right: 20px;
+}
+
+input[type=range]{
+    -webkit-appearance: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 4px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: #555;
+    margin-top: -3px;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+input[type=checkbox] {
+    vertical-align: text-bottom;
+}
+
+.info {
+    position: absolute;
+    top: 180px;
+    left: 885px;
+    line-height: 1.5;
+}
+
+#gr_name {
+    font-size: 14px;
+}
