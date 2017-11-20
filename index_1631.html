@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>Карта интересов</title>
+        <link rel="stylesheet" href="style.css">        
+    </head>
+    <body>
+        <svg width="960" height="500"></svg>
+        <div class="info">
+            <span id="gr_name"></span><br />
+            Доля девочек: <span id="gr_gender"></span><br />
+            Средний балл: <span id="gr_gpa"></span><br />
+            Средний класс: <span id="gr_age"></span><br />
+            Участники: <span id="gr_n"></span><br />
+            <a id="gr_link" target="_blank" href="">Ссылка</a>
+        </div>
+        <div class="filters">
+            <div>
+                Пол<br />
+                <input id="gender_filter" type="range" min="0.5" max="1.0" step = "0.01" value="0">
+            </div>
+           
+            <div>
+                Количество участников<br />
+                <input id="size_filter" type="range" min="10" max="100" step = "1" value="10"><br />
+            </div>
+            <div>
+                Названия <input type="checkbox" id="show_names" />
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="data_1631.json"></script>
+        <script src="plot_1631.js"></script>        
+    </body>
+</html>
